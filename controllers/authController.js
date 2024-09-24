@@ -1,5 +1,8 @@
 const User = require("../models/User");
 const {validationResult} = require("express-validator")
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "CheenTapakDamDam"
 
 exports.register = async(req,res)=>{
 
@@ -9,10 +12,12 @@ exports.register = async(req,res)=>{
 
     try{
         const { username,password, email, location } =  req.body;
-        await User.create({ 
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await User.create({
             username, 
             email, 
-            password, 
+            password:hashedPassword, 
             location 
         });
         res.json({success:true, message:"Data saved Successfully"})
@@ -29,10 +34,20 @@ exports.login = async(req,res)=>{
         if(!userData)
             return res.status(400).json({message: "Try logging in with correct email"});
 
-        if(password !== userData.password)
+        const comparePassword = await bcrypt.compare(password,userData.password);
+
+        if(!comparePassword)
             return res.status(400).json({message: "Enter correct password"});
 
-        return res.status(200).json({success:true});
+        const data = {
+            user:{
+                id:userData._id
+            }
+        }
+
+        const authToken = jwt.sign(data, JWT_SECRET);
+
+        return res.status(200).json({success:true, authToken});
     } catch (err) {
         console.log(err.message);
         res.status(500).json({ success: false, message: "Error occurred during registration" });
