@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = 5000;
+require('dotenv').config();
 
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")

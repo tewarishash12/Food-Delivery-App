@@ -2,10 +2,10 @@ const User = require("../models/User");
 const {validationResult} = require("express-validator")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "CheenTapakDamDam"
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.register = async(req,res)=>{
-
     const err = validationResult(req);
     if(!err.isEmpty())
         return res.status(400).json({err: err.array()})
