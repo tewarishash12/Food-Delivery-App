@@ -1,30 +1,27 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = 5000;
 require('dotenv').config();
 
-app.use((req,res,next)=>{
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
+
+const corsOptions = {
+    origin:"http://localhost:3000",
+    credentials:true
+};
+app.use(cors(corsOptions));
 
 const mongoDB = require("./db");
 mongoDB();
 
-//using middlewares
 app.use(express.json());
 
-
-//address for different routes
 const authRoutes = require("./routes/authRoute");
-
+const contentRoutes = require("./routes/contentRoutes");
 
 //path for different routes
 app.use("/api/auth", authRoutes);
+app.use("/api/content", contentRoutes);
 
 
 app.listen(PORT, (req,res)=>{
