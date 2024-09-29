@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const contentController = require("../controllers/contentController");
 
-router.post("/food", async(req,res) =>{
-    try{
-        res.send([global.food_lists, global.food_category])
-    } catch(err){
-        console.log(err.message);
-    }
-})
+router.post("/food", contentController.orderList)
 
 module.exports = router;
