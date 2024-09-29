@@ -18,10 +18,12 @@ app.use(express.json());
 
 const authRoutes = require("./routes/authRoute");
 const contentRoutes = require("./routes/contentRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 //path for different routes
 app.use("/api/auth", authRoutes);
 app.use("/api/content", contentRoutes);
+app.use("/api/orders", orderRoutes);
 
 
 app.listen(PORT, (req,res)=>{
