@@ -31,3 +31,12 @@ exports.dataStore = async(req,res) =>{
         }
     }
 }
+
+exports.history = async(req,res) => {
+    try{
+        let orderHistory = await Order.findOne({email:req.body.email});
+        res.json({order_history:orderHistory})
+    } catch (err) {
+        res.send("Server Error", err.message); 
+    }
+} 
