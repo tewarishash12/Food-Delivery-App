@@ -6,7 +6,7 @@ require('dotenv').config();
 
 
 const corsOptions = {
-    origin:"https://frontend-git-master-tewarishash12s-projects.vercel.app/",
+    origin:"https://frontend-food-del.onrender.com",
     credentials:true
 };
 app.use(cors(corsOptions));
