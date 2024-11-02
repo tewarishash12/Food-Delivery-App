@@ -6,7 +6,7 @@ require('dotenv').config();
 
 
 const corsOptions = {
-    origin:"http://localhost:3000",
+    origin:"https://frontend-git-master-tewarishash12s-projects.vercel.app/",
     credentials:true
 };
 app.use(cors(corsOptions));
